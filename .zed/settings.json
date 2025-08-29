@@ -1,0 +1,6 @@
+{
+  "prettier": {
+    "allowed": true
+  },
+  "formatter": "prettier"
+}

@@ -8,5 +8,5 @@ export const env = createEnv({
   },
   client: {},
   // For Next.js >= 13.4.4, you only need to destructure client variables:
-  experimental__runtimeEnv: {}
+  experimental__runtimeEnv: {},
 });

@@ -2,12 +2,12 @@
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { UserMenu } from "../user-menu";
-import Link from "next/link";
-import { authClient } from "@/lib/auth/client";
-import { usePathname } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { authClient } from "@/lib/auth/client";
 import { IconDots } from "@tabler/icons-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { UserMenu } from "../user-menu";
 
 function getInitials(name: string) {
   return name

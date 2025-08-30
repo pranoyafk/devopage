@@ -1,3 +1,4 @@
+"use client";
 import { LucideLogOut, LucideSettings, LucideUser } from "lucide-react";
 import type { ReactNode } from "react";
 import {
@@ -7,8 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { authClient } from "@/lib/auth/client";
+import { useRouter } from "next/navigation";
 
 export function UserMenu({ children }: { children: ReactNode }) {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -22,7 +26,18 @@ export function UserMenu({ children }: { children: ReactNode }) {
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive">
+        <DropdownMenuItem
+          onSelect={async () => {
+            await authClient.signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  router.refresh();
+                },
+              },
+            });
+          }}
+          className="gap-2 text-destructive focus:text-destructive"
+        >
           <LucideLogOut className="h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>

@@ -1,0 +1,22 @@
+import { auth } from "@/lib/auth/server";
+import { headers } from "next/headers";
+import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
+
+export default async function AuthLayout({
+  children,
+}: {
+  children: ReactNode;
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
+  const getSessionData = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (getSessionData) notFound();
+  return (
+    <section className="flex items-center justify-center max-h-screen">
+      {children}
+    </section>
+  );
+}

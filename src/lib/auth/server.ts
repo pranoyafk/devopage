@@ -1,12 +1,12 @@
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "@/lib/db";
-import { env } from "../env";
+import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { db } from '@/lib/db';
+import { env } from '../env';
 
 export const auth = betterAuth({
   telemetry: { enabled: false },
   database: drizzleAdapter(db, {
-    provider: "pg",
+    provider: 'pg',
   }),
   emailAndPassword: {
     enabled: true,
@@ -14,11 +14,11 @@ export const auth = betterAuth({
   socialProviders: {
     github: {
       clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET
+      clientSecret: env.GITHUB_CLIENT_SECRET,
     },
-     google: {
+    google: {
       clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET
-    }
-  }
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    },
+  },
 });

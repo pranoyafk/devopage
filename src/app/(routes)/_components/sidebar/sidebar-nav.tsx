@@ -1,9 +1,9 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { navItems } from "@/lib/constants/sidebar";
-import type { SidebarNavItemType } from "@/types/sidebar";
+'use client';
+import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { navItems } from '@/lib/constants/sidebar';
+import type { SidebarNavItemType } from '@/types/sidebar';
 
 export function SidebarNav() {
   return (
@@ -26,10 +26,10 @@ function SidebarNavItem({ item }: { item: SidebarNavItemType }) {
       <Link
         href={item.href}
         className={cn(
-          "relative flex items-center gap-3 rounded-md px-3 py-2 font-medium text-sm transition-colors",
+          'relative flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
           isActive
-            ? "bg-accent text-accent-foreground"
-            : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
+            ? 'bg-accent text-accent-foreground'
+            : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
         )}
       >
         <item.icon className="h-4 w-4" />
@@ -37,8 +37,8 @@ function SidebarNavItem({ item }: { item: SidebarNavItemType }) {
         {item.badge && (
           <span
             className={cn(
-              "flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 font-medium text-foreground text-xs",
-              isActive ? "bg-background" : "bg-destructive",
+              'text-foreground flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-xs font-medium',
+              isActive ? 'bg-background' : 'bg-destructive'
             )}
           >
             {item.badge}

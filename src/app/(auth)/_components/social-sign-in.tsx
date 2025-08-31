@@ -1,16 +1,12 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth/client";
-import {
-  IconBrandGithub,
-  IconBrandGoogleFilled,
-  IconLoader2,
-} from "@tabler/icons-react";
-import { useTransition } from "react";
-import { toast } from "sonner";
+import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/auth/client';
+import { IconBrandGithub, IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react';
+import { useTransition } from 'react';
+import { toast } from 'sonner';
 
-export type Provider = "github" | "google";
+export type Provider = 'github' | 'google';
 
 interface SocialSignInProps {
   provider: Provider;
@@ -20,19 +16,10 @@ interface SocialSignInProps {
 }
 
 function getLogo(provider: Provider) {
-  return provider === "github" ? (
-    <IconBrandGithub />
-  ) : (
-    <IconBrandGoogleFilled />
-  );
+  return provider === 'github' ? <IconBrandGithub /> : <IconBrandGoogleFilled />;
 }
 
-export function SocialSignIn({
-  provider,
-  onStart,
-  onEnd,
-  disabled,
-}: SocialSignInProps) {
+export function SocialSignIn({ provider, onStart, onEnd, disabled }: SocialSignInProps) {
   const [isPending, startTransition] = useTransition();
 
   return (
@@ -45,7 +32,7 @@ export function SocialSignIn({
               onRequest: onStart,
               onResponse: onEnd,
               onError: ({ error }) => {
-                toast.error(error.message || "Internal Server Error");
+                toast.error(error.message || 'Internal Server Error');
               },
             },
           });

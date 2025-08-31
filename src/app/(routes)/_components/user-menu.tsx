@@ -1,21 +1,16 @@
-"use client";
+'use client';
 
-import { useTransition, type ReactNode } from "react";
+import { useTransition, type ReactNode } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { authClient } from "@/lib/auth/client";
-import { useRouter } from "next/navigation";
-import {
-  IconLoader2,
-  IconLogout,
-  IconSettings,
-  IconUser,
-} from "@tabler/icons-react";
+} from '@/components/ui/dropdown-menu';
+import { authClient } from '@/lib/auth/client';
+import { useRouter } from 'next/navigation';
+import { IconLoader2, IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 
 export function UserMenu({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -50,13 +45,9 @@ export function UserMenu({ children }: { children: ReactNode }) {
         <DropdownMenuItem
           onSelect={handleSignOutSelect}
           disabled={isSignOutPending}
-          className="gap-2 text-destructive focus:text-destructive"
+          className="text-destructive focus:text-destructive gap-2"
         >
-          {isSignOutPending ? (
-            <IconLoader2 className="animate-spin" />
-          ) : (
-            <IconLogout />
-          )}
+          {isSignOutPending ? <IconLoader2 className="animate-spin" /> : <IconLogout />}
           <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

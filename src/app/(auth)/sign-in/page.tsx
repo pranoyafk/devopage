@@ -1,38 +1,34 @@
-"use client";
+'use client';
 
-import { DevopageLogo } from "@/components/shared/devopage-logo";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField } from "@/components/ui/form";
-import { FieldWithIcon } from "../_components/field-with-icon";
-import { IconAt, IconLoader2, IconLock } from "@tabler/icons-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { authClient } from "@/lib/auth/client";
-import { toast } from "sonner";
-import { useState } from "react";
-import { SocialSignIn, type Provider } from "../_components/social-sign-in";
-import {
-  signInFormSchema,
-  type SignInFormSchema,
-} from "@/lib/validators/sign-in";
+import { DevopageLogo } from '@/components/shared/devopage-logo';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormField } from '@/components/ui/form';
+import { FieldWithIcon } from '../_components/field-with-icon';
+import { IconAt, IconLoader2, IconLock } from '@tabler/icons-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { authClient } from '@/lib/auth/client';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { SocialSignIn, type Provider } from '../_components/social-sign-in';
+import { signInFormSchema, type SignInFormSchema } from '@/lib/validators/sign-in';
 
 export default function SignInPage() {
   const form = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
   const router = useRouter();
   const [oauthMode, setOauthMode] = useState<Provider>();
   const searchParams = useSearchParams();
-  const nextPage = searchParams.get("nextPage") || "/";
+  const nextPage = searchParams.get('nextPage') || '/';
   console.log(form.formState.defaultValues);
-  const isDisabled =
-    typeof oauthMode !== "undefined" || form.formState.isSubmitting;
+  const isDisabled = typeof oauthMode !== 'undefined' || form.formState.isSubmitting;
 
   async function onSubmit(values: SignInFormSchema) {
     const { error } = await authClient.signIn.email({
@@ -41,42 +37,40 @@ export default function SignInPage() {
     });
 
     if (error) {
-      toast.error(error.message || "Something went wrong!");
+      toast.error(error.message || 'Something went wrong!');
       return;
     }
 
-    toast.success("Welcome back!");
+    toast.success('Welcome back!');
     router.replace(nextPage);
   }
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="bg-card m-auto w-full max-w-sm rounded-lg border p-0.5 mt-10 shadow-md"
+        className="bg-card m-auto mt-10 w-full max-w-sm rounded-lg border p-0.5 shadow-md"
       >
         <div className="p-8 pb-6">
           <div>
             <Link href="/" aria-label="go home">
               <DevopageLogo />
             </Link>
-            <h1 className="mb-1 mt-4 text-xl font-semibold">
-              Sign In to Devopage
-            </h1>
+            <h1 className="mt-4 mb-1 text-xl font-semibold">Sign In to Devopage</h1>
             <p className="text-sm">Welcome back! Sign in to continue</p>
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
             <SocialSignIn
               provider="google"
-              onStart={() => setOauthMode("google")}
+              onStart={() => setOauthMode('google')}
               onEnd={() => setOauthMode(undefined)}
-              disabled={oauthMode === "github"}
+              disabled={oauthMode === 'github'}
             />
             <SocialSignIn
               provider="github"
-              onStart={() => setOauthMode("github")}
+              onStart={() => setOauthMode('github')}
               onEnd={() => setOauthMode(undefined)}
-              disabled={oauthMode === "google"}
+              disabled={oauthMode === 'google'}
             />
           </div>
 
@@ -112,9 +106,7 @@ export default function SignInPage() {
             />
 
             <Button disabled={isDisabled} className="w-full">
-              {form.formState.isSubmitting && (
-                <IconLoader2 className="animate-spin" />
-              )}
+              {form.formState.isSubmitting && <IconLoader2 className="animate-spin" />}
               Sign In
             </Button>
           </div>
@@ -123,12 +115,7 @@ export default function SignInPage() {
         <div className="bg-muted rounded-lg border p-3">
           <p className="text-accent-foreground text-center text-sm">
             {"Don't have an account ?"}
-            <Button
-              disabled={isDisabled}
-              asChild
-              variant="link"
-              className="px-2"
-            >
+            <Button disabled={isDisabled} asChild variant="link" className="px-2">
               <Link href={`/sign-up?nextPage=${nextPage}`}>Create account</Link>
             </Button>
           </p>

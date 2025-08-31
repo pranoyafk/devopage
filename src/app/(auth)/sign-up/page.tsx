@@ -1,40 +1,36 @@
-"use client";
+'use client';
 
-import { DevopageLogo } from "@/components/shared/devopage-logo";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import {
-  signUpFormSchema,
-  type SignUpFormSchema,
-} from "@/lib/validators/sign-up";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Form, FormField } from "@/components/ui/form";
-import { FieldWithIcon } from "../_components/field-with-icon";
-import { IconAt, IconLoader2, IconLock, IconUser } from "@tabler/icons-react";
-import { authClient } from "@/lib/auth/client";
-import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { SocialSignIn, type Provider } from "../_components/social-sign-in";
+import { DevopageLogo } from '@/components/shared/devopage-logo';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { signUpFormSchema, type SignUpFormSchema } from '@/lib/validators/sign-up';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Form, FormField } from '@/components/ui/form';
+import { FieldWithIcon } from '../_components/field-with-icon';
+import { IconAt, IconLoader2, IconLock, IconUser } from '@tabler/icons-react';
+import { authClient } from '@/lib/auth/client';
+import { toast } from 'sonner';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { SocialSignIn, type Provider } from '../_components/social-sign-in';
 
 export default function SignUpPage() {
   const [oauthMode, setOauthMode] = useState<Provider>();
   const form = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     },
   });
   const searchParams = useSearchParams();
-  const nextPage = searchParams.get("nextPage") || "/";
+  const nextPage = searchParams.get('nextPage') || '/';
   const router = useRouter();
 
-  const isDisabled =
-    typeof oauthMode !== "undefined" || form.formState.isSubmitting;
+  const isDisabled = typeof oauthMode !== 'undefined' || form.formState.isSubmitting;
 
   async function onSubmit(values: SignUpFormSchema) {
     const { error } = await authClient.signUp.email({
@@ -44,42 +40,40 @@ export default function SignUpPage() {
     });
 
     if (error) {
-      toast.error(error.message || "Something went wrong!");
+      toast.error(error.message || 'Something went wrong!');
       return;
     }
 
-    toast.success("Account created successfully!");
+    toast.success('Account created successfully!');
     router.replace(nextPage);
   }
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="bg-card m-auto w-full max-w-sm rounded-lg border p-0.5 mt-10 shadow-md"
+        className="bg-card m-auto mt-10 w-full max-w-sm rounded-lg border p-0.5 shadow-md"
       >
         <div className="p-8 pb-6">
           <div>
             <Link href="/" aria-label="go home">
               <DevopageLogo />
             </Link>
-            <h1 className="mb-1 mt-4 text-xl font-semibold">
-              Create a Devopage Account
-            </h1>
+            <h1 className="mt-4 mb-1 text-xl font-semibold">Create a Devopage Account</h1>
             <p className="text-sm">Welcome! Create an account to get started</p>
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
             <SocialSignIn
               provider="google"
-              onStart={() => setOauthMode("google")}
+              onStart={() => setOauthMode('google')}
               onEnd={() => setOauthMode(undefined)}
-              disabled={oauthMode === "github"}
+              disabled={oauthMode === 'github'}
             />
             <SocialSignIn
               provider="github"
-              onStart={() => setOauthMode("github")}
+              onStart={() => setOauthMode('github')}
               onEnd={() => setOauthMode(undefined)}
-              disabled={oauthMode === "google"}
+              disabled={oauthMode === 'google'}
             />
           </div>
 
@@ -143,9 +137,7 @@ export default function SignUpPage() {
             />
 
             <Button disabled={isDisabled} className="w-full">
-              {form.formState.isSubmitting && (
-                <IconLoader2 className="animate-spin" />
-              )}
+              {form.formState.isSubmitting && <IconLoader2 className="animate-spin" />}
               Continue
             </Button>
           </div>

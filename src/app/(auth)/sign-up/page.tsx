@@ -10,15 +10,16 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormField } from "@/components/ui/form";
-import { GoogleButton } from "../_components/google-button";
-import { GithubButton } from "../_components/github-button";
 import { IconField } from "../_components/icon-field";
-import { IconAt, IconLock, IconUser } from "@tabler/icons-react";
+import { IconAt, IconLoader2, IconLock, IconUser } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth/client";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { SocialSignIn } from "../_components/social-sign-in";
 
 export default function SignUpPage() {
+  const [oauthMode, setOauthMode] = useState<"google" | "github">();
   const form = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -31,6 +32,9 @@ export default function SignUpPage() {
   const searchParams = useSearchParams();
   const nextPage = searchParams.get("nextPage") || "/";
   const router = useRouter();
+
+  const isDisabled =
+    typeof oauthMode !== "undefined" || form.formState.isSubmitting;
 
   async function onSubmit(values: SignUpFormSchema) {
     const { error } = await authClient.signUp.email({
@@ -65,8 +69,18 @@ export default function SignUpPage() {
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <GoogleButton />
-            <GithubButton />
+            <SocialSignIn
+              provider="google"
+              onStart={() => setOauthMode("google")}
+              onEnd={() => setOauthMode(undefined)}
+              disabled={oauthMode === "github"}
+            />
+            <SocialSignIn
+              provider="github"
+              onStart={() => setOauthMode("github")}
+              onEnd={() => setOauthMode(undefined)}
+              disabled={oauthMode === "google"}
+            />
           </div>
 
           <hr className="my-4 border-dashed" />
@@ -78,6 +92,7 @@ export default function SignUpPage() {
               render={({ field }) => (
                 <IconField
                   label="Name"
+                  disabled={isDisabled}
                   icon={IconUser}
                   placeholder="John Doe"
                   field={field}
@@ -91,6 +106,7 @@ export default function SignUpPage() {
               render={({ field }) => (
                 <IconField
                   label="Email"
+                  disabled={isDisabled}
                   placeholder="johndoe@example.com"
                   icon={IconAt}
                   field={field}
@@ -104,6 +120,7 @@ export default function SignUpPage() {
               render={({ field }) => (
                 <IconField
                   label="Password"
+                  disabled={isDisabled}
                   placeholder="********"
                   icon={IconLock}
                   field={field}
@@ -117,6 +134,7 @@ export default function SignUpPage() {
               render={({ field }) => (
                 <IconField
                   label="Confirm Password"
+                  disabled={isDisabled}
                   placeholder="********"
                   icon={IconLock}
                   field={field}
@@ -124,7 +142,10 @@ export default function SignUpPage() {
               )}
             />
 
-            <Button loading={form.formState.isSubmitting} className="w-full">
+            <Button disabled={isDisabled} className="w-full">
+              {form.formState.isSubmitting && (
+                <IconLoader2 className="animate-spin" />
+              )}
               Continue
             </Button>
           </div>

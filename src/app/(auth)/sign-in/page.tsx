@@ -3,31 +3,38 @@
 import { DevopageLogo } from "@/components/shared/devopage-logo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { GoogleButton } from "../_components/google-button";
-import { GithubButton } from "../_components/github-button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema, type SignInSchema } from "@/lib/validators/sign-in";
 import { Form, FormField } from "@/components/ui/form";
 import { IconField } from "../_components/icon-field";
-import { IconAt, IconLock } from "@tabler/icons-react";
+import { IconAt, IconLoader2, IconLock } from "@tabler/icons-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth/client";
 import { toast } from "sonner";
+import { useState } from "react";
+import { SocialSignIn } from "../_components/social-sign-in";
+import {
+  signInFormSchema,
+  type SignInFormSchema,
+} from "@/lib/validators/sign-in";
 
 export default function SignInPage() {
-  const form = useForm<SignInSchema>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<SignInFormSchema>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
+  const router = useRouter();
+  const [oauthMode, setOauthMode] = useState<"google" | "github">();
   const searchParams = useSearchParams();
   const nextPage = searchParams.get("nextPage") || "/";
-  const router = useRouter();
+  console.log(form.formState.defaultValues);
+  const isDisabled =
+    typeof oauthMode !== "undefined" || form.formState.isSubmitting;
 
-  async function onSubmit(values: SignInSchema) {
+  async function onSubmit(values: SignInFormSchema) {
     const { error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
@@ -59,8 +66,18 @@ export default function SignInPage() {
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <GoogleButton />
-            <GithubButton />
+            <SocialSignIn
+              provider="google"
+              onStart={() => setOauthMode("google")}
+              onEnd={() => setOauthMode(undefined)}
+              disabled={oauthMode === "github"}
+            />
+            <SocialSignIn
+              provider="github"
+              onStart={() => setOauthMode("github")}
+              onEnd={() => setOauthMode(undefined)}
+              disabled={oauthMode === "google"}
+            />
           </div>
 
           <hr className="my-4 border-dashed" />
@@ -75,6 +92,7 @@ export default function SignInPage() {
                   placeholder="johndoe@example.com"
                   icon={IconAt}
                   field={field}
+                  disabled={isDisabled}
                 />
               )}
             />
@@ -88,11 +106,15 @@ export default function SignInPage() {
                   placeholder="********"
                   icon={IconLock}
                   field={field}
+                  disabled={isDisabled}
                 />
               )}
             />
 
-            <Button loading={form.formState.isSubmitting} className="w-full">
+            <Button disabled={isDisabled} className="w-full">
+              {form.formState.isSubmitting && (
+                <IconLoader2 className="animate-spin" />
+              )}
               Sign In
             </Button>
           </div>
@@ -101,7 +123,12 @@ export default function SignInPage() {
         <div className="bg-muted rounded-lg border p-3">
           <p className="text-accent-foreground text-center text-sm">
             {"Don't have an account ?"}
-            <Button asChild variant="link" className="px-2">
+            <Button
+              disabled={isDisabled}
+              asChild
+              variant="link"
+              className="px-2"
+            >
               <Link href={`/sign-up?nextPage=${nextPage}`}>Create account</Link>
             </Button>
           </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { authClient } from "@/lib/auth/client";
@@ -62,7 +62,11 @@ export function SidebarFooter() {
         className="h-auto w-full justify-start gap-3 px-3 py-2 hover:bg-accent"
       >
         <Avatar className="h-8 w-8">
-          <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+          {user.image ? (
+            <AvatarImage src={user.image} />
+          ) : (
+            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+          )}
         </Avatar>
         <div className="flex flex-1 flex-col items-start text-left">
           <span className="font-medium text-sm">{user.name}</span>

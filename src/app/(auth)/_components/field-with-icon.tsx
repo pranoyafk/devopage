@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { type Icon } from "@tabler/icons-react";
 import type { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 
-interface IconFieldProps<T extends FieldValues> {
+interface FieldWithIconProps<T extends FieldValues> {
   field: ControllerRenderProps<T, Path<T>>;
   icon: Icon;
   placeholder: string;
@@ -16,13 +16,13 @@ interface IconFieldProps<T extends FieldValues> {
   disabled: boolean;
 }
 
-export function IconField<T extends FieldValues>({
+export function FieldWithIcon<T extends FieldValues>({
   field,
   icon: Icon,
   placeholder,
   label,
   disabled,
-}: IconFieldProps<T>) {
+}: FieldWithIconProps<T>) {
   return (
     <FormItem className="*:not-first:mt-2">
       <FormLabel className="capitalize">{label}</FormLabel>

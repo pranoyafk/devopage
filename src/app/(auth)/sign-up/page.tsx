@@ -10,7 +10,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormField } from "@/components/ui/form";
-import { IconField } from "../_components/icon-field";
+import { FieldWithIcon } from "../_components/field-with-icon";
 import { IconAt, IconLoader2, IconLock, IconUser } from "@tabler/icons-react";
 import { authClient } from "@/lib/auth/client";
 import { toast } from "sonner";
@@ -90,7 +90,7 @@ export default function SignUpPage() {
               control={form.control}
               name="name"
               render={({ field }) => (
-                <IconField
+                <FieldWithIcon
                   label="Name"
                   disabled={isDisabled}
                   icon={IconUser}
@@ -104,7 +104,7 @@ export default function SignUpPage() {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <IconField
+                <FieldWithIcon
                   label="Email"
                   disabled={isDisabled}
                   placeholder="johndoe@example.com"
@@ -118,7 +118,7 @@ export default function SignUpPage() {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <IconField
+                <FieldWithIcon
                   label="Password"
                   disabled={isDisabled}
                   placeholder="********"
@@ -132,7 +132,7 @@ export default function SignUpPage() {
               control={form.control}
               name="confirmPassword"
               render={({ field }) => (
-                <IconField
+                <FieldWithIcon
                   label="Confirm Password"
                   disabled={isDisabled}
                   placeholder="********"

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField } from "@/components/ui/form";
-import { IconField } from "../_components/icon-field";
+import { FieldWithIcon } from "../_components/field-with-icon";
 import { IconAt, IconLoader2, IconLock } from "@tabler/icons-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth/client";
@@ -87,7 +87,7 @@ export default function SignInPage() {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <IconField
+                <FieldWithIcon
                   label="Email"
                   placeholder="johndoe@example.com"
                   icon={IconAt}
@@ -101,7 +101,7 @@ export default function SignInPage() {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <IconField
+                <FieldWithIcon
                   label="Password"
                   placeholder="********"
                   icon={IconLock}

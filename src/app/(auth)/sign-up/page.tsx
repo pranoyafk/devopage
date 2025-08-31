@@ -16,10 +16,10 @@ import { authClient } from "@/lib/auth/client";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { SocialSignIn } from "../_components/social-sign-in";
+import { SocialSignIn, type Provider } from "../_components/social-sign-in";
 
 export default function SignUpPage() {
-  const [oauthMode, setOauthMode] = useState<"google" | "github">();
+  const [oauthMode, setOauthMode] = useState<Provider>();
   const form = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {

@@ -12,7 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth/client";
 import { toast } from "sonner";
 import { useState } from "react";
-import { SocialSignIn } from "../_components/social-sign-in";
+import { SocialSignIn, type Provider } from "../_components/social-sign-in";
 import {
   signInFormSchema,
   type SignInFormSchema,
@@ -27,7 +27,7 @@ export default function SignInPage() {
     },
   });
   const router = useRouter();
-  const [oauthMode, setOauthMode] = useState<"google" | "github">();
+  const [oauthMode, setOauthMode] = useState<Provider>();
   const searchParams = useSearchParams();
   const nextPage = searchParams.get("nextPage") || "/";
   console.log(form.formState.defaultValues);

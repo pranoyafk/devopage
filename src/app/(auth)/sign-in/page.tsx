@@ -27,7 +27,7 @@ export default function SignInPage() {
   const [oauthMode, setOauthMode] = useState<Provider>();
   const searchParams = useSearchParams();
   const nextPage = searchParams.get('nextPage') || '/';
-  console.log(form.formState.defaultValues);
+
   const isDisabled = typeof oauthMode !== 'undefined' || form.formState.isSubmitting;
 
   async function onSubmit(values: SignInFormSchema) {

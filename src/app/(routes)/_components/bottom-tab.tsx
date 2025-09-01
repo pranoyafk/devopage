@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { bottomTabItems } from '@/lib/constants/bottom-tab';
 import type { BottomTabItemType } from '@/types/bottom-tab';
+import type { User } from '@/lib/auth/client';
+import { PostCreationDialog } from './post-creation-dialog';
 
-export function BottomTab() {
+export function BottomTab({ user }: { user?: User }) {
   return (
     <div className="bg-secondary/90 supports-[backdrop-filter]:bg-secondary/70 fixed bottom-4 left-1/2 z-50 h-[74px] w-full max-w-md -translate-x-1/2 rounded-full border backdrop-blur md:hidden">
       <div className="mx-auto grid h-full max-w-md grid-cols-5">
@@ -17,6 +19,7 @@ export function BottomTab() {
             item={item}
             isFirst={index === 0}
             isLast={index + 1 === bottomTabItems.length}
+            user={user}
           />
         ))}
       </div>
@@ -24,14 +27,32 @@ export function BottomTab() {
   );
 }
 
-function BottomTabItem({ item, isFirst, isLast }: { item: BottomTabItemType; isFirst: boolean; isLast: boolean }) {
+function BottomTabItem({
+  item,
+  isFirst,
+  isLast,
+  user,
+}: {
+  item: BottomTabItemType;
+  isFirst: boolean;
+  isLast: boolean;
+  user?: User;
+}) {
   const pathName = usePathname();
   const isActive = pathName.startsWith(item.href);
 
   if (item.href === '/create') {
-    return (
-      <Button size="icon" variant={isActive ? 'outline' : 'default'} className="m-auto rounded-full">
-        <LucidePlus />
+    return user ? (
+      <PostCreationDialog user={user}>
+        <Button size="icon" variant={isActive ? 'outline' : 'default'} className="m-auto rounded-full">
+          <LucidePlus />
+        </Button>
+      </PostCreationDialog>
+    ) : (
+      <Button size="icon" variant={isActive ? 'outline' : 'default'} className="m-auto rounded-full" asChild>
+        <Link href="/sign-in">
+          <LucidePlus />
+        </Link>
       </Button>
     );
   }

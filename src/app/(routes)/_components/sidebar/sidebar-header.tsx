@@ -1,8 +1,11 @@
-import { LucideCode2, LucidePlus } from 'lucide-react';
+import { LucideCode2 } from 'lucide-react';
+import { PostCreationDialog } from '../post-creation-dialog';
+import { getAuthSession } from '@/lib/auth/utils';
 import { Button } from '@/components/ui/button';
+import { IconPlus } from '@tabler/icons-react';
 
-export function SidebarHeader() {
-  const isAuthenticated = 1 > 0; // TODO: add auth later
+export async function SidebarHeader() {
+  const { user } = await getAuthSession();
 
   return (
     <div className="p-4">
@@ -13,10 +16,19 @@ export function SidebarHeader() {
         <span className="text-lg font-semibold">Devopage</span>
       </div>
 
-      <Button size="lg" disabled={isAuthenticated === false} className="w-full">
-        <LucidePlus className="mr-2 h-4 w-4" />
-        Create Post
-      </Button>
+      {user ? (
+        <PostCreationDialog user={user}>
+          <Button size="lg" className="w-full">
+            <IconPlus className="mr-2 h-4 w-4" />
+            Create Post
+          </Button>
+        </PostCreationDialog>
+      ) : (
+        <Button size="lg" className="w-full">
+          <IconPlus className="mr-2 h-4 w-4" />
+          Create Post
+        </Button>
+      )}
     </div>
   );
 }

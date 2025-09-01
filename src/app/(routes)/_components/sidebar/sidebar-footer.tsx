@@ -1,6 +1,5 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { authClient } from '@/lib/auth/client';
@@ -8,14 +7,7 @@ import { IconDots } from '@tabler/icons-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { UserMenu } from '../user-menu';
-
-function getInitials(name: string) {
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase();
-}
+import { UserAvatar } from '@/components/user-avatar';
 
 function SidebarFooterSkeleton() {
   return (
@@ -58,9 +50,7 @@ export function SidebarFooter() {
   return (
     <UserMenu>
       <Button variant="ghost" className="hover:bg-accent h-auto w-full justify-start gap-3 px-3 py-2">
-        <Avatar className="h-8 w-8">
-          {user.image ? <AvatarImage src={user.image} /> : <AvatarFallback>{getInitials(user.name)}</AvatarFallback>}
-        </Avatar>
+        <UserAvatar user={user} />
         <div className="flex flex-1 flex-col items-start text-left">
           <span className="text-sm font-medium">{user.name}</span>
           <span className="text-muted-foreground text-xs">{user.email}</span>

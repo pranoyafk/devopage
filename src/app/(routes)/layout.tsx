@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
 import { Sidebar } from './_components/sidebar';
 import { BottomTab } from './_components/bottom-tab';
+import { getAuthSession } from '@/lib/auth/utils';
 
-export default function MainLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function MainLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const { user } = await getAuthSession();
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="hidden md:flex md:w-64 lg:w-72">
@@ -13,7 +15,7 @@ export default function MainLayout({ children }: Readonly<{ children: ReactNode 
         <div className="mx-auto max-w-7xl">{children}</div>
       </main>
 
-      <BottomTab />
+      <BottomTab user={user} />
     </div>
   );
 }

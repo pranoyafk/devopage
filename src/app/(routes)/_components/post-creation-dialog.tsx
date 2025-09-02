@@ -17,7 +17,7 @@ import { UserAvatar } from '@/components/user-avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { MAX_CONTENT, MIN_CONTENT } from '@/lib/constants/posts';
+import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH } from '@/lib/constants/posts';
 import { cn } from '@/lib/utils';
 
 export function PostCreationDialog({ user, children }: { user: User; children: ReactNode }) {
@@ -68,18 +68,18 @@ export function PostCreationDialog({ user, children }: { user: User; children: R
             <Textarea
               className="min-h-24 resize-none border-none break-words break-all"
               placeholder="What's happening?"
-              maxLength={MAX_CONTENT}
-              minLength={MIN_CONTENT}
+              maxLength={POST_CONTENT_MAX_LENGTH}
+              minLength={POST_CONTENT_MIN_LENGTH}
               onChange={(e) => setContent(e.target.value)}
               value={content}
             />
             <span
               className={cn('mt-3 ml-auto block text-xs', {
-                'text-yellow-500': content.length >= MAX_CONTENT - 10,
-                'text-destructive': content.length === MAX_CONTENT,
+                'text-yellow-500': content.length >= POST_CONTENT_MAX_LENGTH - 10,
+                'text-destructive': content.length === POST_CONTENT_MAX_LENGTH,
               })}
             >
-              {content.length}/{MAX_CONTENT}
+              {content.length}/{POST_CONTENT_MAX_LENGTH}
             </span>
           </div>
         </div>

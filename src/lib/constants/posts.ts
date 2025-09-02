@@ -1,2 +1,2 @@
-export const MAX_CONTENT = 280;
-export const MIN_CONTENT = 10;
+export const POST_CONTENT_MAX_LENGTH = 280;
+export const POST_CONTENT_MIN_LENGTH = 10;

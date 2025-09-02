@@ -26,7 +26,7 @@ export function PostCreationDialog({ user, children }: { user: User; children: R
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="gap-0 p-0">
+      <DialogContent className="bg-card gap-0 p-0">
         <DialogHeader className="items-start border-b px-4 py-3">
           <DialogTitle className="text-lg">Create New Post</DialogTitle>
           <DialogDescription className="text-muted-foreground text-start text-sm">

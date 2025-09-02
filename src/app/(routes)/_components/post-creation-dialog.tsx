@@ -16,8 +16,13 @@ import type { User } from '@/lib/auth/client';
 import { UserAvatar } from '@/components/user-avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { MAX_CONTENT, MIN_CONTENT } from '@/lib/constants/posts';
+import { cn } from '@/lib/utils';
 
 export function PostCreationDialog({ user, children }: { user: User; children: ReactNode }) {
+  const [content, setContent] = useState<string>('');
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -63,10 +68,19 @@ export function PostCreationDialog({ user, children }: { user: User; children: R
             <Textarea
               className="min-h-24 resize-none border-none break-words break-all"
               placeholder="What's happening?"
-              maxLength={280}
-              minLength={10}
+              maxLength={MAX_CONTENT}
+              minLength={MIN_CONTENT}
+              onChange={(e) => setContent(e.target.value)}
+              value={content}
             />
-            <span className="mt-3 ml-auto block text-xs">10/280</span>
+            <span
+              className={cn('mt-3 ml-auto block text-xs', {
+                'text-yellow-500': content.length >= MAX_CONTENT - 10,
+                'text-destructive': content.length === MAX_CONTENT,
+              })}
+            >
+              {content.length}/{MAX_CONTENT}
+            </span>
           </div>
         </div>
         <DialogFooter className="border-t px-4 py-3">

@@ -1,4 +1,4 @@
-import { base } from '../base';
 import { requireAuth } from '../middlewares/require-auth';
+import { publicProcedure } from './public';
 
-export const protectedProcedure = base.use(requireAuth);
+export const protectedProcedure = publicProcedure.use(requireAuth);

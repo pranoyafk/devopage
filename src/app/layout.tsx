@@ -1,7 +1,10 @@
+import '@/lib/orpc.server';
+
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import '@/styles/globals.css';
 import { Toaster } from '@/components/ui/sonner';
+import { Providers } from './providers';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -25,9 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}>
-        {children}
-        <Toaster />
+      <body
+        className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
+      >
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

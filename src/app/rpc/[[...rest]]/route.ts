@@ -1,4 +1,4 @@
-import { appRouter } from '@/lib/orpc';
+import { appRouter } from '@/orpc';
 import { RPCHandler } from '@orpc/server/fetch';
 import { headers } from 'next/headers';
 

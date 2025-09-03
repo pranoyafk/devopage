@@ -1,5 +1,5 @@
+import type { db } from '@/lib/db';
 import { os } from '@orpc/server';
-import type { db } from '../db';
 
 export const base = os
   .errors({

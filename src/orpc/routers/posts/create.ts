@@ -3,7 +3,7 @@ import {
   postsTable,
   selectPostSchema,
 } from '@/lib/db/schemas/post';
-import { protectedProcedure } from '@/lib/orpc/procedures/auth';
+import { protectedProcedure } from '@/orpc/procedures/auth';
 
 export const createPost = protectedProcedure
   .input(insertPostSchema)

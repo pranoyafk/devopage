@@ -29,7 +29,7 @@ import type { User } from '@/lib/auth/client';
 import { UserAvatar } from '@/components/user-avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import {
   POST_CONTENT_MAX_LENGTH,
   POST_CONTENT_MIN_LENGTH,
@@ -37,9 +37,10 @@ import {
   type Visibility,
 } from '@/lib/constants/posts';
 import { cn } from '@/lib/utils';
-import { client } from '@/lib/orpc-client';
-import { safe } from '@orpc/client';
+
 import { toast } from 'sonner';
+import { orpc } from '@/lib/orpc';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function PostCreationDialog({
   user,
@@ -49,30 +50,34 @@ export function PostCreationDialog({
   children: ReactNode;
 }) {
   const [content, setContent] = useState<string>('');
-  const [isPending, startTransition] = useTransition();
   const [visibility, setVisibility] = useState<Visibility>('public');
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const { mutate: createPost, isPending } = useMutation(
+    orpc.posts.create.mutationOptions({
+      onError: (err) => {
+        toast.error(err.message ?? 'Internal Server Error');
+      },
+      onSuccess: async () => {
+        setDialogOpen(false);
+        setContent('');
+
+        await queryClient.invalidateQueries({
+          queryKey: orpc.posts.all.queryKey(),
+        });
+      },
+    })
+  );
 
   const isValid =
     content.length <= POST_CONTENT_MAX_LENGTH &&
     content.length >= POST_CONTENT_MIN_LENGTH;
 
   function onSubmit() {
-    startTransition(async () => {
-      const { error } = await safe(
-        client.posts.create({
-          authorId: user.id,
-          content,
-          visibility,
-        })
-      );
-
-      if (error) {
-        toast.error(error.message);
-      } else {
-        setDialogOpen(false);
-        setContent('');
-      }
+    createPost({
+      authorId: user.id,
+      content,
+      visibility,
     });
   }
   return (

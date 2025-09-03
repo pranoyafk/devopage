@@ -17,6 +17,9 @@ importers:
       '@orpc/server':
         specifier: ^1.8.6
         version: 1.8.6
+      '@orpc/tanstack-query':
+        specifier: ^1.8.6
+        version: 1.8.6(@orpc/client@1.8.6)(@tanstack/query-core@5.85.9)
       '@radix-ui/react-avatar':
         specifier: ^1.1.10
         version: 1.1.10(@types/react-dom@19.1.9(@types/react@19.1.12))(@types/react@19.1.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -44,6 +47,9 @@ importers:
       '@tabler/icons-react':
         specifier: ^3.34.1
         version: 3.34.1(react@19.1.0)
+      '@tanstack/react-query':
+        specifier: ^5.85.9
+        version: 5.85.9(react@19.1.0)
       better-auth:
         specifier: ^1.3.7
         version: 1.3.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zod@4.1.5)
@@ -808,6 +814,12 @@ packages:
   '@orpc/standard-server@1.8.6':
     resolution: {integrity: sha512-py33OG4Mpu2LIA9Oo8lNH0THo7dcDwFPewiTYVXJ1zQN7SDHtIp+bWmtWgK81fUy5k/s5nM36hoGLojVw/1GZQ==}
 
+  '@orpc/tanstack-query@1.8.6':
+    resolution: {integrity: sha512-+koozDrqYeesCk5R60KE1HUZsz+drkue+V6oDwJa+VfDtWZnrXiIjxV90akptDPiQm/xm+Xr+gedblx42nn/xA==}
+    peerDependencies:
+      '@orpc/client': 1.8.6
+      '@tanstack/query-core': '>=5.80.2'
+
   '@peculiar/asn1-android@2.4.0':
     resolution: {integrity: sha512-YFueREq97CLslZZBI8dKzis7jMfEHSLxM+nr0Zdx1POiXFLjqqwoY5s0F1UimdBiEw/iKlHey2m56MRDv7Jtyg==}
 
@@ -1339,6 +1351,14 @@ packages:
 
   '@tailwindcss/postcss@4.1.12':
     resolution: {integrity: sha512-5PpLYhCAwf9SJEeIsSmCDLgyVfdBhdBpzX1OJ87anT9IVR0Z9pjM0FNixCAUAHGnMBGB8K99SwAheXrT0Kh6QQ==}
+
+  '@tanstack/query-core@5.85.9':
+    resolution: {integrity: sha512-5fxb9vwyftYE6KFLhhhDyLr8NO75+Wpu7pmTo+TkwKmMX2oxZDoLwcqGP8ItKSpUMwk3urWgQDZfyWr5Jm9LsQ==}
+
+  '@tanstack/react-query@5.85.9':
+    resolution: {integrity: sha512-2T5zgSpcOZXGkH/UObIbIkGmUPQqZqn7esVQFXLOze622h4spgWf5jmvrqAo9dnI13/hyMcNsF1jsoDcb59nJQ==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@tybys/wasm-util@0.10.0':
     resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
@@ -3594,6 +3614,14 @@ snapshots:
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
+  '@orpc/tanstack-query@1.8.6(@orpc/client@1.8.6)(@tanstack/query-core@5.85.9)':
+    dependencies:
+      '@orpc/client': 1.8.6
+      '@orpc/shared': 1.8.6
+      '@tanstack/query-core': 5.85.9
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
   '@peculiar/asn1-android@2.4.0':
     dependencies:
       '@peculiar/asn1-schema': 2.4.0
@@ -4087,6 +4115,13 @@ snapshots:
       '@tailwindcss/oxide': 4.1.12
       postcss: 8.5.6
       tailwindcss: 4.1.12
+
+  '@tanstack/query-core@5.85.9': {}
+
+  '@tanstack/react-query@5.85.9(react@19.1.0)':
+    dependencies:
+      '@tanstack/query-core': 5.85.9
+      react: 19.1.0
 
   '@tybys/wasm-util@0.10.0':
     dependencies:

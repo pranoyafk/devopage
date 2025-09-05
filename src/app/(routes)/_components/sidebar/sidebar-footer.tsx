@@ -2,12 +2,12 @@
 
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { authClient } from '@/lib/auth/client';
 import { IconDots } from '@tabler/icons-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { UserMenu } from '../user-menu';
 import { UserAvatar } from '@/components/user-avatar';
+import { Authenticated } from '@/components/shared/authenticated';
 
 function SidebarFooterSkeleton() {
   return (
@@ -28,35 +28,41 @@ function SidebarFooterSkeleton() {
 }
 
 export function SidebarFooter() {
-  const { data: getSessionData, isPending } = authClient.useSession();
   const pathName = usePathname();
 
-  if (isPending) return <SidebarFooterSkeleton />;
-  if (!getSessionData?.user) {
-    return (
-      <div className="px-2 py-3">
-        <Link
-          href={`/sign-in?nextPage=${pathName}`}
-          className={buttonVariants({
-            className: 'w-full',
-          })}
-        >
-          Sign In
-        </Link>
-      </div>
-    );
-  }
-  const { user } = getSessionData;
   return (
-    <UserMenu>
-      <Button variant="ghost" className="hover:bg-accent h-auto w-full justify-start gap-3 px-3 py-2">
-        <UserAvatar user={user} />
-        <div className="flex flex-1 flex-col items-start text-left">
-          <span className="text-sm font-medium">{user.name}</span>
-          <span className="text-muted-foreground text-xs">{user.email}</span>
+    <Authenticated
+      pending={<SidebarFooterSkeleton />}
+      fallback={
+        <div className="px-2 py-3">
+          <Link
+            href={`/sign-in?nextPage=${pathName}`}
+            className={buttonVariants({
+              className: 'w-full',
+            })}
+          >
+            Sign In
+          </Link>
         </div>
-        <IconDots className="text-muted-foreground h-4 w-4" />
-      </Button>
-    </UserMenu>
+      }
+    >
+      {(user) => (
+        <UserMenu>
+          <Button
+            variant="ghost"
+            className="hover:bg-accent h-auto w-full justify-start gap-3 px-3 py-2"
+          >
+            <UserAvatar user={user} />
+            <div className="flex flex-1 flex-col items-start text-left">
+              <span className="text-sm font-medium">{user.name}</span>
+              <span className="text-muted-foreground text-xs">
+                {user.email}
+              </span>
+            </div>
+            <IconDots className="text-muted-foreground h-4 w-4" />
+          </Button>
+        </UserMenu>
+      )}
+    </Authenticated>
   );
 }

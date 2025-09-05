@@ -18,6 +18,7 @@ import { IconAt, IconLoader2, IconLock } from '@tabler/icons-react';
 import { Button } from '../ui/button';
 import type { AuthPage } from './dialog';
 import { DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
+import { useRouter } from 'next/navigation';
 
 export function SignInForm({
   switchPage,
@@ -32,6 +33,7 @@ export function SignInForm({
     },
   });
   const [oauthMode, setOauthMode] = useState<Provider>();
+  const router = useRouter();
 
   const isDisabled =
     typeof oauthMode !== 'undefined' || form.formState.isSubmitting;
@@ -48,6 +50,7 @@ export function SignInForm({
     }
 
     toast.success('Welcome back!');
+    router.refresh();
   }
 
   return (

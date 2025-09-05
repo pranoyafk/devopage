@@ -18,6 +18,7 @@ import { IconAt, IconLoader2, IconLock, IconUser } from '@tabler/icons-react';
 import { Button } from '../ui/button';
 import type { AuthPage } from './dialog';
 import { DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
+import { useRouter } from 'next/navigation';
 
 export function SignUpForm({
   switchPage,
@@ -34,7 +35,7 @@ export function SignUpForm({
       confirmPassword: '',
     },
   });
-
+  const router = useRouter();
   const isDisabled =
     typeof oauthMode !== 'undefined' || form.formState.isSubmitting;
 
@@ -51,6 +52,7 @@ export function SignUpForm({
     }
 
     toast.success('Account created successfully!');
+    router.refresh();
   }
 
   return (

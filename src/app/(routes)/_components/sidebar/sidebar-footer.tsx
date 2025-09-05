@@ -1,13 +1,12 @@
 'use client';
 
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { IconDots } from '@tabler/icons-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { UserMenu } from '../user-menu';
 import { UserAvatar } from '@/components/user-avatar';
 import { Authenticated } from '@/components/shared/authenticated';
+import { AuthDialog } from '@/components/auth/dialog';
 
 function SidebarFooterSkeleton() {
   return (
@@ -28,21 +27,14 @@ function SidebarFooterSkeleton() {
 }
 
 export function SidebarFooter() {
-  const pathName = usePathname();
-
   return (
     <Authenticated
       pending={<SidebarFooterSkeleton />}
       fallback={
         <div className="px-2 py-3">
-          <Link
-            href={`/sign-in?nextPage=${pathName}`}
-            className={buttonVariants({
-              className: 'w-full',
-            })}
-          >
-            Sign In
-          </Link>
+          <AuthDialog>
+            <Button className="w-full">Sign In</Button>
+          </AuthDialog>
         </div>
       }
     >

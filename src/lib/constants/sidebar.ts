@@ -1,50 +1,32 @@
 import type { SidebarNavItemType } from '@/types/sidebar';
 import {
-  LucideHome,
-  LucideCompass,
-  LucideFlame,
-  LucideTrophy,
-  LucideMessageSquare,
-  LucideBell,
-  LucideBookmark,
-} from 'lucide-react';
+  IconHome,
+  IconCompass,
+  IconBell,
+  IconMessage,
+} from '@tabler/icons-react';
 
 export const navItems: SidebarNavItemType[] = [
   {
     label: 'Home',
     href: '/',
-    icon: LucideHome,
+    icon: IconHome,
   },
   {
     label: 'Explore',
     href: '/explore',
-    icon: LucideCompass,
-  },
-  {
-    label: 'Trending',
-    href: '/trending',
-    icon: LucideFlame,
-  },
-  {
-    label: 'Challenges',
-    href: '/challenges',
-    icon: LucideTrophy,
+    icon: IconCompass,
   },
   {
     label: 'Messages',
     href: '/messages',
-    icon: LucideMessageSquare,
+    icon: IconMessage,
     badge: 3,
   },
   {
     label: 'Notifications',
     href: '/notifications',
-    icon: LucideBell,
+    icon: IconBell,
     badge: 7,
-  },
-  {
-    label: 'Bookmarks',
-    href: '/bookmarks',
-    icon: LucideBookmark,
   },
 ];

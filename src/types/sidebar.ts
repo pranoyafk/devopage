@@ -1,8 +1,8 @@
-import type { LucideIcon } from 'lucide-react';
+import type { Icon } from '@tabler/icons-react';
 
 export interface SidebarNavItemType {
   label: string;
-  href: string;
-  icon: LucideIcon;
+  href: __next_route_internal_types__.RouteImpl<string>;
+  icon: Icon;
   badge?: number;
 }

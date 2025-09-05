@@ -19,7 +19,9 @@ export function SidebarNav() {
 
 function SidebarNavItem({ item }: { item: SidebarNavItemType }) {
   const pathName = usePathname();
-  const isActive = pathName.startsWith(item.href);
+  const isActive =
+    pathName === item.href ||
+    (item.href !== '/' && pathName.startsWith(item.href + '/'));
 
   return (
     <li>

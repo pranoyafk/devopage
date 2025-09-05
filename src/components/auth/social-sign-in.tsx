@@ -2,7 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth/client';
-import { IconBrandGithub, IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react';
+import {
+  IconBrandGithub,
+  IconBrandGoogleFilled,
+  IconLoader2,
+} from '@tabler/icons-react';
+import { usePathname } from 'next/navigation';
 import { useTransition } from 'react';
 import { toast } from 'sonner';
 
@@ -16,18 +21,28 @@ interface SocialSignInProps {
 }
 
 function getLogo(provider: Provider) {
-  return provider === 'github' ? <IconBrandGithub /> : <IconBrandGoogleFilled />;
+  return provider === 'github' ? (
+    <IconBrandGithub className="h-4 w-4" />
+  ) : (
+    <IconBrandGoogleFilled className="h-4 w-4" />
+  );
 }
 
-export function SocialSignIn({ provider, onStart, onEnd, disabled }: SocialSignInProps) {
+export function SocialSignIn({
+  provider,
+  onStart,
+  onEnd,
+  disabled,
+}: SocialSignInProps) {
   const [isPending, startTransition] = useTransition();
-
+  const pathName = usePathname();
   return (
     <Button
       onClick={() =>
         startTransition(async () => {
           await authClient.signIn.social({
             provider,
+            callbackURL: pathName,
             fetchOptions: {
               onRequest: onStart,
               onResponse: onEnd,
@@ -41,9 +56,14 @@ export function SocialSignIn({ provider, onStart, onEnd, disabled }: SocialSignI
       variant="outline"
       type="button"
       disabled={isPending || disabled}
+      className="flex items-center justify-center gap-2"
     >
-      {isPending ? <IconLoader2 className="animate-spin" /> : getLogo(provider)}
-      <span className="capitalize">{provider}</span>
+      {isPending ? (
+        <IconLoader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        getLogo(provider)
+      )}
+      <span className="text-sm capitalize">{provider}</span>
     </Button>
   );
 }

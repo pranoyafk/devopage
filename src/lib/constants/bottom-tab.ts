@@ -1,35 +1,44 @@
 import type { BottomTabItemType } from '@/types/bottom-tab';
-import { LucideHome, LucideCompass, LucidePlus, LucideMessageCircle, LucideUser } from 'lucide-react';
+import {
+  IconCompass,
+  IconHome,
+  IconMessageCircle,
+  IconPlus,
+  IconUser,
+} from '@tabler/icons-react';
 
 export const bottomTabItems: BottomTabItemType[] = [
   {
     label: 'Home',
     href: '/',
-    icon: LucideHome,
+    icon: IconHome,
     badge: 0,
+    type: 'link',
   },
   {
     label: 'Explore',
     href: '/explore',
-    icon: LucideCompass,
+    icon: IconCompass,
     badge: 0,
+    type: 'link',
   },
   {
     label: 'Create',
-    href: '/create',
-    icon: LucidePlus,
-    badge: 0,
+    icon: IconPlus,
+    type: 'create',
   },
   {
     label: 'Messages',
     href: '/messages',
-    icon: LucideMessageCircle,
+    icon: IconMessageCircle,
     badge: 3,
+    type: 'link',
   },
   {
     label: 'Profile',
+    icon: IconUser,
+    type: 'link',
     href: '/profile',
-    icon: LucideUser,
     badge: 0,
   },
 ];

@@ -8,10 +8,12 @@ export default async function Home() {
   void queryClient.prefetchQuery(orpc.posts.all.queryOptions());
 
   return (
-    <section className="space-y-10">
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <FeedSection />
-      </HydrationBoundary>
-    </section>
+    <main className="space-y-10">
+      <section className="mx-auto my-6 max-w-xl space-y-6 px-4">
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <FeedSection />
+        </HydrationBoundary>
+      </section>
+    </main>
   );
 }

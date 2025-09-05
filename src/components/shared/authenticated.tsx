@@ -3,13 +3,13 @@ import type { ReactNode } from 'react';
 
 interface AuthenticatedProps {
   children: (user: User) => ReactNode;
-  fallback: ReactNode;
+  fallback?: ReactNode;
   pending?: ReactNode;
 }
 
 export function Authenticated({
   children,
-  fallback,
+  fallback = null,
   pending = null,
 }: AuthenticatedProps) {
   const { data, isPending } = authClient.useSession();

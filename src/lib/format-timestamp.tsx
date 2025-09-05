@@ -11,5 +11,5 @@ export function formatTimestamp(date: Date) {
     .replace(' minute', ' min')
     .replace(' seconds', ' secs')
     .replace(' second', ' sec')
-    .replace('less than a minute', 'just now');
+    .replace('less than a min ago', 'just now');
 }

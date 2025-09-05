@@ -10,12 +10,12 @@ import type { SelectPostSchemaWithUser } from '@/lib/db/schemas';
 import { formatTimestamp } from '@/lib/format-timestamp';
 import {
   IconBookmark,
-  IconDots,
   IconHeart,
   IconMessage2,
   IconPointFilled,
   IconRepeat,
 } from '@tabler/icons-react';
+import { ActionButton } from './actions';
 
 export function PostCard({ post }: { post: SelectPostSchemaWithUser }) {
   return (
@@ -34,9 +34,7 @@ export function PostCard({ post }: { post: SelectPostSchemaWithUser }) {
             </div>
           </div>
         </div>
-        <Button size="icon" variant="ghost">
-          <IconDots />
-        </Button>
+        <ActionButton postId={post.id} authorId={post.authorId} />
       </CardHeader>
       <CardContent className="break-words">{post.content}</CardContent>
       <CardFooter className="flex items-center justify-around pt-0">

@@ -6,7 +6,9 @@
     "dev": "turbo run dev",
     "lint": "pnpm exec biome lint --write",
     "fmt": "pnpm exec biome format --write .",
-    "check-types": "turbo run check-types"
+    "check-types": "turbo run check-types",
+    "db:generate": "pnpm --filter ./apps/server/ db:generate",
+    "db:migrate": "pnpm --filter ./apps/server/ db:migrate"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.3",

@@ -2,7 +2,7 @@ import { initTRPC } from "@trpc/server";
 import SuperJson from "superjson";
 
 const t = initTRPC.create({
-  transformer: SuperJson,
+	transformer: SuperJson,
 });
 
 export const createTRPCRouter = t.router;

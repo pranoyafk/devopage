@@ -11,6 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: 2.2.3
         version: 2.2.3
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:packages/tsconfig
       turbo:
         specifier: ^2.5.6
         version: 2.5.6
@@ -69,6 +72,8 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.9.2
+
+  packages/shared: {}
 
   packages/tsconfig: {}
 

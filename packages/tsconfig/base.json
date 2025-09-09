@@ -15,6 +15,11 @@
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"noEmit": true,
-		"lib": ["ESNext", "dom", "dom.iterable"]
+		"lib": ["ESNext", "dom", "dom.iterable"],
+		"allowImportingTsExtensions": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedSideEffectImports": true
 	}
 }

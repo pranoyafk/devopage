@@ -5,17 +5,17 @@ import { defineConfig } from "vite";
 import viteTsConfigPaths from "vite-tsconfig-paths";
 
 const config = defineConfig({
-	plugins: [
-		// this is the plugin that enables path aliases
-		viteTsConfigPaths({
-			projects: ["./tsconfig.json"],
-		}),
-		tanstackStart({
-			customViteReactPlugin: true,
-		}),
-		viteReact(),
-		tailwindcss(),
-	],
+  plugins: [
+    // this is the plugin that enables path aliases
+    viteTsConfigPaths({
+      projects: ["./tsconfig.json"],
+    }),
+    tanstackStart({
+      customViteReactPlugin: true,
+    }),
+    viteReact(),
+    tailwindcss(),
+  ],
 });
 
 export default config;

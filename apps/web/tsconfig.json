@@ -1,13 +1,13 @@
 {
-	"include": ["**/*.ts", "**/*.tsx"],
-	"extends": "@repo/tsconfig/base.json",
-	"compilerOptions": {
-		"jsx": "react-jsx",
-		"types": ["vite/client"],
+  "include": ["**/*.ts", "**/*.tsx"],
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["vite/client"],
 
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		}
-	}
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
 }

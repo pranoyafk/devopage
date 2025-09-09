@@ -1,38 +1,39 @@
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { createRouter as createTanstackRouter } from "@tanstack/react-router";
-import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import type { ReactNode } from "react";
+import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import { toast } from "sonner";
+import SuperJSON from "superjson";
 import { TRPCProvider } from "@/lib/trpc";
-
+import type { AppRouter } from "../../server/src/trpc/router";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
-import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppRouter } from "../../server/src/trpc/router";
-import { httpBatchLink, createTRPCClient } from "@trpc/client";
-import SuperJSON from "superjson";
-import { toast } from "sonner";
-import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
 export const queryClient = new QueryClient({
-	queryCache: new QueryCache({
-		onError: (error) => {
-			toast.error(error.message, {
-				action: {
-					label: "retry",
-					onClick: () => {
-						queryClient.invalidateQueries();
-					},
-				},
-			});
-		},
-	}),
-	defaultOptions: { queries: { staleTime: 60 * 1000 } },
+  queryCache: new QueryCache({
+    onError: (error) => {
+      toast.error(error.message, {
+        action: {
+          label: "retry",
+          onClick: () => {
+            queryClient.invalidateQueries();
+          },
+        },
+      });
+    },
+  }),
+  defaultOptions: { queries: { staleTime: 60 * 1000 } },
 });
 
 const trpcClient = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       url: `${import.meta.env.VITE_SERVER_URL}/trpc`,
-	  transformer: SuperJSON,
+      transformer: SuperJSON,
       fetch(url, options) {
         return fetch(url, {
           ...options,
@@ -55,7 +56,7 @@ export const createRouter = () => {
     defaultPreloadStaleTime: 0,
     context: { trpc, queryClient },
     defaultNotFoundComponent: () => <div>Not Found</div>,
-   Wrap: ({ children }) => (
+    Wrap: ({ children }) => (
       <QueryClientProvider client={queryClient}>
         <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
           {children}
@@ -68,7 +69,7 @@ export const createRouter = () => {
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
-	interface Register {
-		router: ReturnType<typeof createRouter>;
-	}
+  interface Register {
+    router: ReturnType<typeof createRouter>;
+  }
 }

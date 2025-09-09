@@ -3,11 +3,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useTRPC } from "@/lib/trpc";
 
 export const Route = createFileRoute("/")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	const trpc = useTRPC();
-	const { data: greeting } = useQuery(trpc.greeting.queryOptions());
-	return <div>{greeting}</div>;
+  const trpc = useTRPC();
+  const { data: greeting } = useQuery(trpc.greeting.queryOptions());
+  return <div>{greeting}</div>;
 }

@@ -10,5 +10,6 @@ export const envSchema = z.object({
 	GOOGLE_CLIENT_ID: z.string(),
 	GOOGLE_CLIENT_SECRET: z.string(),
 	PORT: z.coerce.number(),
+	CROSS_ORIGIN: z.url(),
 });
 export const env = envSchema.parse(process.env);
